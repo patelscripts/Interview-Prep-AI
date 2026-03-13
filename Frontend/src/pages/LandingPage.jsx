@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-
 import { APP_FEATURES } from '../utils/data'
 import { useNavigate } from 'react-router-dom'
 import {LuSparkles} from "react-icons/lu"
-import HERO_IMG from "../assets/HERO_IMG.png"
 function LandingPage() {
     const navigate = useNavigate();
 
@@ -12,7 +10,7 @@ function LandingPage() {
 
     const handleCTA = () =>{};
   return (
-    <div className="w-full min-h-screen bg-[#FFCEFF]">
+    <div className="w-full min-h-full bg-[#FFFCEF] pb-36">
         <div className='w-[500px] h-[500px] bg-amber-200/20 blur-[65px] absolute top-0 left-0'/>
 
         <div className=' container mx-auto px-4 pt-6 pb-[200px] relative z-10'>
@@ -58,15 +56,8 @@ function LandingPage() {
                     </button>
                 </div>
             </div>
-
-            {/* Hero image */}
-            <div className='mt-8 flex justify-center'>
-                <img src={HERO_IMG} alt="" 
-                className='w-full '/>
-            </div>
         </div>
         </div>
-
   )
 }
 
