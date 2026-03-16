@@ -23,4 +23,28 @@ export const APP_FEATURES = [
     description:
       "Get interview questions and model answers based on your role , experience and specific focus areas ",
   },
+  {
+    id: "05",
+    title: "Tailored just for you",
+    description:
+      "Get interview questions and model answers based on your role , experience and specific focus areas ",
+  },
+  {
+    id: "06",
+    title: "Tailored just for you",
+    description:
+      "Get interview questions and model answers based on your role , experience and specific focus areas ",
+  },
+  {
+    id: "07",
+    title: "Tailored just for you",
+    description:
+      "Get interview questions and model answers based on your role , experience and specific focus areas ",
+  },
+  {
+    id: "08",
+    title: "Tailored just for you",
+    description:
+      "Get interview questions and model answers based on your role , experience and specific focus areas ",
+  }
 ];

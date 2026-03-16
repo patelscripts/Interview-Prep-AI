@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import Login from './Auth/Login'
+import SignUp from'./Auth/SignUp'
 import { APP_FEATURES } from '../utils/data'
 import { useNavigate } from 'react-router-dom'
 import {LuSparkles} from "react-icons/lu"
+import Modal from '../components/Loader/Modal'
 function LandingPage() {
     const navigate = useNavigate();
 
@@ -50,14 +53,73 @@ function LandingPage() {
                     </p>
 
                     <button 
-                    className='bg-black text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-yellow-100 hover:text-black border border-yellow-100 hover:border-yellow-300 transition-colors cursor-pointer'
+                    className='bg-black text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-yellow-100 hover:text-black border border-yellow-100 hover:border-yellow-500 transition-colors cursor-pointer'
                     onClick={handleCTA}>
                         Get Started
                     </button>
                 </div>
             </div>
         </div>
+        <div className='w-full min-h-full bg-[#FFFCEF] mt-10'>
+            <div className='container mx-auto px-4 pt-10 pb-20'>
+                <section className='mt-5'>
+                    <h2 className='text-2xl font-medium text-center mb-12'>
+                        Features that make you shine
+                    </h2>
+                    <div className='flex flex-col items-center gap-8'>
+                        {/* First three cards */}
+                        <div className='grid grid-cols-1 md:grid-cols-3 gap-8 w-full '>
+                            {APP_FEATURES.slice(0,3).map((feature)=>{
+                                return(
+                                <div className='bg-[#FFFEF8] p-6 rounded-xl shadow-xs hover:shadow-lg shadow-amber-200 transition border border-amber-100'
+                                 key={feature.id}>
+                                     <h3 className='text-base font-semibold mb-3'>
+                                        {feature.title}
+                                     </h3>
+                                     <p className='text-gray-600'>{feature.description}</p>
+                                </div>
+                                )
+                            })}
+                        </div>
+
+                        {/* remaining two card here */}
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-8 '>
+                            {APP_FEATURES.slice(3).map((feature)=>{
+                                return(
+                                <div key={feature.id} 
+                                className=' p-3 bg-[#FFFEF8] rounded-xl shadow-xs hover:shadow-lg shadow-amber-200 transition border border-amber-100'>
+                                    <h3 className='text-base font-semibold mb-3'>
+                                        {feature.title}
+                                    </h3>
+                                    <p className='text-gray-600'>{feature.description}</p>
+                                </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </section>
+
+            </div>
         </div>
+        <Modal
+        isOpen = {openAuthModal}
+        onClose = {()=>{
+            setOpenAuthModal(false);
+            setCurrentPage("login")
+        }}
+        hideHeader
+        >
+            <div>
+                {currentPage === "login" && (
+                    <Login setCurrentPage={setCurrentPage}/>
+                )}
+                {currentPage === "signup" &&(
+                    <SignUp setCurrentPage={setCurrentPage}/>
+                )}
+            </div>
+        </Modal>
+        </div>
+        
   )
 }
 
