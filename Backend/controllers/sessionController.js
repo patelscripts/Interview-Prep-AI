@@ -33,6 +33,7 @@ exports.createSession = async(req,res)=>{
         await session.save();
         res.status(201).json({success:true, session})
     } catch (error) {
+        console.log("FULL ERROR 👉", error);
         res.status(500).json({success:false, message:"server error"})
     }
 };

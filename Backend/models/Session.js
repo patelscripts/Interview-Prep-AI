@@ -1,26 +1,26 @@
 const mongoose = require("mongoose");
 
 const sessionSchema = new mongoose.Schema({
-    session:{
+    user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
     role:{
         type : String,
-        reqired:true
+        required : true
     },
     experience:{
         type:String,
         required:true
     },
-    topicsToFoucs:{
+    topicsToFocus:{
         type : String,
         required : true
     },
     description: String,
     questions:[{
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Questions"
+        ref : "Question"
     }]
 } ,{timestamps:true});
 
