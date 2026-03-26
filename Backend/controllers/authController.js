@@ -82,6 +82,7 @@ const getUserProfile = async(req, res) =>{
         if(!user){
             return res.status(404).json({message:"No file upload"});
         }
+        res.json(user);
     } catch (error) {
         res.status(500).json({message:"Server error",error:error.message})
     }

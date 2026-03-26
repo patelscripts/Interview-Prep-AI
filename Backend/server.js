@@ -3,6 +3,7 @@ const express = require("express");
 const cors =  require("cors");
 const path = require("path");
 const connectDB = require("./config/db")
+const {protect} = require('./middlewares/authMiddleware')
 const authRoutes = require("./routes/authRoutes")
 const sessionRoutes = require('./routes/sessionRoutes')
 const questionRoutes = require('./routes/questionRoutes')

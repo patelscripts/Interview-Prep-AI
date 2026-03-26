@@ -44,7 +44,10 @@ exports.createSession = async(req,res)=>{
 
 exports.getMySession = async(req,res)=>{
     try {
-        
+        const session = await Session.find({user : req.user.id})
+        .sort({createdAt: -1})
+        .populate("questions");
+        res.status(200).json(session)
     } catch (error) {
         res.status(500).json({success:false, message:"server error"})
     }
@@ -55,7 +58,20 @@ exports.getMySession = async(req,res)=>{
 //@access Private
 exports.getSessionById = async(req,res) =>{
      try {
-        
+        const session = await Session.findById(req.params.id)
+        .populate({
+            path:"questions",
+            options:{sort : {isPinned:-1, createdAt: -1}}
+        })
+        .exec();
+
+        if(!session){
+            return res
+            .status(404)
+            .json({success : false, message : "Session not found"})
+        }
+
+        res.status(200).json({success: true, session})
     } catch (error) {
         res.status(500).json({success:false, message:"server error"})
     }
