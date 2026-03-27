@@ -82,7 +82,23 @@ exports.getSessionById = async(req,res) =>{
 //@access Private
 exports.deleteSession = async(req,res) =>{
      try {
-        
+        const session = await Session.findById(req.params.id);
+        if(!session){
+            return res.status(404).json({message : "Session not found"});
+        }
+
+        // Check if the logged-in user owns this session
+        if(session.user.toString() !== req.user.id){
+            return res
+            .status(401)
+            .json({message : "Not authorized to delete this session"})
+        }
+        // first, delete all questions linked to this session
+        await Question.deleteMany({session: session._id});
+
+        // then delete the session
+        await session.deleteOne();
+        res.status(200).json({message : "Session deleted successfully"});
     } catch (error) {
         res.status(500).json({success:false, message:"server error"})
     }
