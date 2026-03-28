@@ -44,11 +44,13 @@ exports.createSession = async(req,res)=>{
 
 exports.getMySession = async(req,res)=>{
     try {
+        console.log("USER 👉", req.user)
         const session = await Session.find({user : req.user.id})
         .sort({createdAt: -1})
         .populate("questions");
         res.status(200).json(session)
     } catch (error) {
+        console.log("🔥 REAL ERROR 👉", error);
         res.status(500).json({success:false, message:"server error"})
     }
 }

@@ -27,23 +27,28 @@ axiosInstance.interceptors.request.use(
 
 // Respone Interceptor
 axiosInstance.interceptors.response.use(
-    (response) =>{
+    (response) => {
         return response;
     },
-    (error) =>{
-        //Handle common errors globally
-        if(error.response){
-            if(response.status === 401){
+    (error) => {
+        // Handle common errors globally
+        if (error.response) {
+
+            if (error.response.status === 401) {
                 // redirect to login page
                 window.location.href = "/";
-            }else if(error.response.status === 500){
-                console.error("Server error. Please try again later")
+            } 
+            
+            else if (error.response.status === 500) {
+                console.error("Server error. Please try again later");
             }
-        }else if(error.code === "ECONNABORTED"){
-            console.error("Request timeout. Please try again")
+
+        } else if (error.code === "ECONNABORTED") {
+            console.error("Request timeout. Please try again");
         }
+
         return Promise.reject(error);
     }
-)
+);
 
 export default axiosInstance;
