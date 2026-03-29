@@ -30,7 +30,7 @@ const generateInterviewQuestions = async (req, res) => {
     );
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash", // 🔥 safer model
+      model: "gemini-2.5-flash", // safer model
       contents: prompt,
     });
 
@@ -88,22 +88,39 @@ const generateConceptExplanation = async (req, res) => {
     const prompt = conceptExplainPrompt(question);
 
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
     });
 
-    const explanation =
+    const rawText =
       response?.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
-    if (!explanation) {
+    if (!rawText) {
       return res.status(500).json({
         message: "Empty response from AI",
       });
     }
 
-    return res.status(200).json({ explanation });
+    const cleanedText = rawText
+      .replace(/^```json\s*/i, "")
+      .replace(/```$/, "")
+      .trim();
+    let data;
+    try {
+      data = JSON.parse(cleanedText);
+    } catch (err) {
+      return res.status(500).json({
+        message: "Invalid JSON from AI",
+        raw: cleanedText,
+      });
+    }
+
+    // send proper object
+    return res.status(200).json(data);
 
   } catch (error) {
+    console.error("EXPLANATION ERROR:", error);
+
     return res.status(500).json({
       message: "Failed to generate explanation",
       error: error.message,
